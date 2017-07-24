@@ -1,8 +1,5 @@
 # Created by https://www.gitignore.io/api/node
 
-#Evitando que usuários exponham suas credenciais
-resources/aws.properties
-
 #Target
 target/
 
