@@ -3,12 +3,12 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/guivirtuoso/aws-node-upload-to-s3/blob/master/LICENSE)
 
 ### Case
-Enviar arquivos para o AWS S3 através de um ```<form>``` html hospedado no próprio S3.
+Enviar arquivos para o AWS S3 através de um ```<form/>``` HTML hospedado no próprio S3.
 
 ### Desafio
-As requisições de POST para o S3 requerem algumas informações no formulário para serem interpretadas como uma requisição confiável.
+As requisições de POST para o S3 requerem algumas informações no ```<form/>``` para serem interpretadas como uma requisição confiável.
 
-Para isto, devem estar no ```<form>```, alguns campos ocultos são calculados a partir de credenciais válidas para a conta.
+Para isto, devem estar no ```<form/>```, alguns campos ocultos são calculados a partir de credenciais válidas para a conta.
 
 O desafio principal é gerar a policy corretamente em Base64 calculada com a aws signature key do usuário, que deve ser exatamente igual à estrutura enviada no html. Fonte: [http://docs.aws.amazon.com/pt_br/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html](http://docs.aws.amazon.com/pt_br/AmazonS3/latest/API/sigv4-HTTPPOSTConstructPolicy.html).
 
@@ -16,7 +16,7 @@ Este projeto facilita este trabalho, expondo de maneira simples os dados requeri
 
 
 ### Pré-requisitos
-- Criar um usuário no IAM com ```Programmatic access``` apenas e definir um grupo de permissões com acesso completo no S3
+- Criar um usuário no IAM apenas com ```Programmatic access``` e definir um grupo de permissões com acesso completo no S3 (Ex: AmazonS3FullAccess)
 
 - Salvar os dados relacionados ao ```awsAccessKeyId``` e ```awsSecretAccessKey```, você irá precisar destas informações na próxima etapa
 
