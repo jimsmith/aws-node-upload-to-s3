@@ -72,6 +72,27 @@ fs.readFile('src/index.template.html', 'utf8', (err, input) => {
   });
 });
 
+// Gerando index-progress.html
+console.log('Gerando arquivo /target/index-progress.html . OK!');
+fs.readFile('src/index-progress.template.html', 'utf8', (err, input) => {
+  if (err) {
+    console.log(err);
+  }
+
+  const data = input
+    .replace(/%BUCKET_URL%/g, bucketUrl)
+    .replace(/%BUCKET_DESTINY_FOLDER%/g, bucketDestinyFolder)
+    .replace(/%AWS_ACCESS_KEY%/g, awsAccessKeyId)
+    .replace(/%POLICY_BASE64%/g, policyB64)
+    .replace(/%SIGNATURE%/g, signature);
+
+  fs.writeFile('target/index-progress.html', data, 'utf8', (e) => {
+    if (e) {
+      console.log(e);
+    }
+  });
+});
+
 // Gerando success.html
 console.log('Gerando arquivo /target/success.html ........ OK!');
 fs.readFile('src/success.template.html', 'utf8', (err, input) => {
