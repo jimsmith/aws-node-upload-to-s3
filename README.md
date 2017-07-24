@@ -2,7 +2,7 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/guivirtuoso/aws-node-upload-to-s3/blob/master/LICENSE)
 
-Formulário simples para envio de arquivos para o S3
+Este projeto auxilia na geração das informações exigidas pela Amazon, para validar o envio de objetos para o S3 através de formulários HTML.
 
 ### Pré-requisitos
 - Criar um usuário no IAM com ```Programmatic access``` apenas e definir um grupo de permissões com acesso completo no S3
@@ -11,6 +11,8 @@ Formulário simples para envio de arquivos para o S3
 
 - Criar um bucket no S3 e [definir as propriedades de static website hosting](http://docs.aws.amazon.com/pt_br/AmazonS3/latest/user-guide/static-website-hosting.html)
 
+- [Definir as permissões do Bucket](http://docs.aws.amazon.com/pt_br/gettingstarted/latest/swh/getting-started-configure-bucket.html#add-permissions) para o acesso web
+
 - Instalar o [NodeJS](https://nodejs.org/en/download/)
 
 ### Configurações
@@ -18,7 +20,7 @@ Formulário simples para envio de arquivos para o S3
 
 - Use os dados salvos no passo anterior para preencher as propriedades do usuário
 
-- ```CUIDADO``` Não salve em repositórios públicos suas informações de ```awsAccessKeyId``` e ```awsSecretAccessKey```
+- ```CUIDADO:``` Não salve em repositórios públicos suas informações de ```awsAccessKeyId``` e ```awsSecretAccessKey```
 
 ### Processo de build
 Acessar a pasta do projeto via terminal e executar os comandos abaixo:
