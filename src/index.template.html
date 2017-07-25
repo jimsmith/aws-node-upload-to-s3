@@ -5,21 +5,85 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>S3 Upload</title>
+  <title>S3 Upload - HTML5</title>
 </head>
 
 <body>
   <H1>S3 Upload</H1>
-  <form action="%BUCKET_URL%" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="key" value="%BUCKET_DESTINY_FOLDER%/${filename}">
-    <input type="hidden" name="AWSAccessKeyId" value="%AWS_ACCESS_KEY%">
-    <input type="hidden" name="acl" value="public-read">
-    <input type="hidden" name="success_action_redirect" value="%BUCKET_URL%/success.html">
-    <input type="hidden" name="policy" value="%POLICY_BASE64%">
-    <input type="hidden" name="signature" value="%SIGNATURE%">
-    <input type="hidden" name="Content-Type" value=""> Arquivo para upload: <input name="file" type="file"><br><br>
-    <input type="submit" value="Upload">
+
+  <form method="post" enctype="multipart/form-data" id="formUpload">
+    Arquivo para upload: <input type="file" id="file" name="file"><br><br>
+    <input type="button" onClick="upload()" value="Upload">
   </form>
+  <BR>
+  <BR> Progresso:
+  <progress id="progress" value="0"></progress><div id="progressNumber"></div>
+
+  <BR>
+  <BR> Resultado:
+  <BR>
+  <BR> <div id="resultado"></div>
+
+
+  <script language="javascript">
+    var progressBar = document.getElementById('progress');
+    var btnUpload = document.getElementById('btnUpload');
+
+    function upload() {
+
+      var formData = new FormData();
+      var file = document.getElementById('file').files[0];
+
+      formData.append('key', '%BUCKET_DESTINY_FOLDER%/${filename}');
+      formData.append('AWSAccessKeyId', '%AWS_ACCESS_KEY%');
+      formData.append('acl', 'public-read');
+      formData.append('success_action_status', '201');
+      formData.append('policy', '%POLICY_BASE64%');
+      formData.append('signature', '%SIGNATURE%');
+      formData.append('Content-Type', '');
+      formData.append('file', file);
+
+      var xhr = new XMLHttpRequest();
+      xhr.addEventListener('load', uploadComplete, false);
+      xhr.addEventListener('error', uploadFailed, false);
+      xhr.addEventListener('abort', uploadCanceled, false);
+
+      xhr.upload.onprogress = function (e) {
+        if (e.lengthComputable) {
+          progressBar.max = e.total;
+          progressBar.value = e.loaded;
+
+          var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
+          document.getElementById('progressNumber').innerHTML = ratio;
+        }
+      };
+
+      xhr.upload.onloadstart = function (e) {
+        progressBar.value = 0;
+        document.getElementById('resultado').innerText = '';
+      };
+
+      xhr.upload.onloadend = function (e) {
+        progressBar.value = e.loaded;
+      };
+
+      xhr.open('POST', '%BUCKET_URL%');
+      xhr.send(formData);
+    }
+
+    function uploadComplete(evt) {
+      document.getElementById('resultado').innerText = evt.target.responseText;
+    }
+
+    function uploadFailed(evt) {
+      alert('Erro ao fazer o upload do arquivo.' + evt);
+    }
+
+    function uploadCanceled(evt) {
+      alert('O Upload foi cancelado pelo usuário ou o browser perdeu a conexão!');
+    }
+  </script>
+
 </body>
 
 </html>

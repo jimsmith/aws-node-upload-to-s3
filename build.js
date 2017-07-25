@@ -4,7 +4,7 @@ console.log('    ___ _       _______    __________    __  ______  __   ____  ___
 console.log('   /   | |     / / ___/   / ___|__  /   / / / / __ \\/ /  / __ \\/   |  / __ \\');
 console.log('  / /| | | /| / /\\__ \\    \\__ \\ /_ <   / / / / /_/ / /  / / / / /| | / / / /');
 console.log(' / ___ | |/ |/ /___/ /   ___/ ___/ /  / /_/ / ____/ /__/ /_/ / ___ |/ /_/ / ');
-console.log('/_/  |_|__/|__//____/   /____/____/   \\____/_/   /_____\\____/_/  |_/_____/  ');
+console.log('/_/  |_|__/|__//____/   /____/____/   \\____/_/   /_____\\____/_/  |_/_____/');
 
 const crypto = require('crypto');
 const fs = require('fs');
@@ -40,14 +40,14 @@ const policy = {
   conditions: [
     ['starts-with', '$key', `${bucketDestinyFolder}/`],
     {
-      bucket: bucketName
+      bucket: bucketName,
     },
     {
-      acl: 'public-read'
+      acl: 'public-read',
     },
     ['starts-with', '$Content-Type', ''],
     {
-      success_action_redirect: `${bucketUrl}/success.html`
+      success_action_status: '201',
     },
   ],
 };
@@ -64,7 +64,7 @@ console.log('\nBUILD');
 console.log('-----');
 
 // Gerando index.html
-console.log('Gerando arquivo /target/index.html .......... OK!');
+console.log('Gerando arquivo /target/index.html ....... OK!');
 fs.readFile('src/index.template.html', 'utf8', (err, input) => {
   if (err) {
     console.log(err);
@@ -84,44 +84,6 @@ fs.readFile('src/index.template.html', 'utf8', (err, input) => {
   });
 });
 
-// Gerando index-progress.html
-console.log('Gerando arquivo /target/index-progress.html . OK!');
-fs.readFile('src/index-progress.template.html', 'utf8', (err, input) => {
-  if (err) {
-    console.log(err);
-  }
-
-  const data = input
-    .replace(/%BUCKET_URL%/g, bucketUrl)
-    .replace(/%BUCKET_DESTINY_FOLDER%/g, bucketDestinyFolder)
-    .replace(/%AWS_ACCESS_KEY%/g, awsAccessKeyId)
-    .replace(/%POLICY_BASE64%/g, policyB64)
-    .replace(/%SIGNATURE%/g, signature);
-
-  fs.writeFile('target/index-progress.html', data, 'utf8', (e) => {
-    if (e) {
-      console.log(e);
-    }
-  });
-});
-
-// Gerando success.html
-console.log('Gerando arquivo /target/success.html ........ OK!');
-fs.readFile('src/success.template.html', 'utf8', (err, input) => {
-  if (err) {
-    console.log(err);
-  }
-
-  const data = input
-    .replace(/%BUCKET_NAME%/g, bucketName);
-
-  fs.writeFile('target/success.html', data, 'utf8', (e) => {
-    if (e) {
-      console.log(e);
-    }
-  });
-});
-
 // Gerando error.html
 console.log('Gerando arquivo /target/error.html .......... OK!');
 fs.readFile('src/error.template.html', 'utf8', (err, input) => {
@@ -130,7 +92,7 @@ fs.readFile('src/error.template.html', 'utf8', (err, input) => {
   }
 
   const data = input
-    .replace(/%BUCKET_NAME%/g, bucketName);
+    .replace(/%BUCKET_URL%/g, bucketUrl);
 
   fs.writeFile('target/error.html', data, 'utf8', (e) => {
     if (e) {
