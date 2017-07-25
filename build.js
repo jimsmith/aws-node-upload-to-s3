@@ -4,7 +4,7 @@ console.log('    ___ _       _______    __________    __  ______  __   ____  ___
 console.log('   /   | |     / / ___/   / ___|__  /   / / / / __ \\/ /  / __ \\/   |  / __ \\');
 console.log('  / /| | | /| / /\\__ \\    \\__ \\ /_ <   / / / / /_/ / /  / / / / /| | / / / /');
 console.log(' / ___ | |/ |/ /___/ /   ___/ ___/ /  / /_/ / ____/ /__/ /_/ / ___ |/ /_/ / ');
-console.log('/_/  |_|__/|__//____/   /____/____/   \\____/_/   /_____\\____/_/  |_/_____/');
+console.log('/_/  |_|__/|__//____/   /____/____/   \\____/_/   /_____\\____/_/  |_/_____/ ');
 
 const crypto = require('crypto');
 const fs = require('fs');
@@ -64,7 +64,7 @@ console.log('\nBUILD');
 console.log('-----');
 
 // Gerando index.html
-console.log('Gerando arquivo /target/index.html ....... OK!');
+console.log('Gerando arquivo /target/index.html .......... OK!');
 fs.readFile('src/index.template.html', 'utf8', (err, input) => {
   if (err) {
     console.log(err);
