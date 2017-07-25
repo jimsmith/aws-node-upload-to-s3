@@ -9,6 +9,12 @@ console.log('/_/  |_|__/|__//____/   /____/____/   \\____/_/   /_____\\____/_/  
 const crypto = require('crypto');
 const fs = require('fs');
 
+var targetFolder = './target';
+
+if (!fs.existsSync(targetFolder)) {
+  fs.mkdirSync(targetFolder);
+}
+
 const propertiesReader = require('properties-reader');
 const awsProperties = propertiesReader('resources/aws.properties');
 
@@ -33,10 +39,16 @@ const policy = {
   expiration,
   conditions: [
     ['starts-with', '$key', `${bucketDestinyFolder}/`],
-    { bucket: bucketName },
-    { acl: 'public-read' },
+    {
+      bucket: bucketName
+    },
+    {
+      acl: 'public-read'
+    },
     ['starts-with', '$Content-Type', ''],
-    { success_action_redirect: `${bucketUrl}/success.html` },
+    {
+      success_action_redirect: `${bucketUrl}/success.html`
+    },
   ],
 };
 
